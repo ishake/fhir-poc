@@ -1,0 +1,31 @@
+﻿@page
+@model QuestionnaireModel
+@using Hl7.Fhir.Model 
+
+<h1>Questionnaire</h1>
+
+<form>
+    <label for="systolic">Blood pressure:</label>
+    <input id="systolic" name="systolic" value="@Model.SystolicBloodPressure?.ToString("N0")" />
+    <input id="diastolic" name="diastolic" value="@Model.DiastolicBloodPressure?.ToString("N0")" />
+    <h2>Conditions (from EHR):</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Condition</th>
+                <th>Onset</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var condition in Model.Conditions)
+            {
+                <tr>
+                    <td>@condition.Code.Text</td>
+                    <td>@((condition.Onset as FhirDateTime).ToDateTime().Value.Date.ToShortDateString())</td>
+                    <td>@condition.ClinicalStatus.Coding[0].Code</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</form>

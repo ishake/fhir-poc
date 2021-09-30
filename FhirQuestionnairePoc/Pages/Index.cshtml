@@ -1,0 +1,18 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<h1>SMART on FHIR Launch</h1>
+<p><a href="@Model.LaunchUrl" style="border: 1px solid black; padding: 0.5rem 1rem">Launch EHR From Portal</a></p>
+<hr />
+<p>To simulate a launch from within the EHR:</p>
+<ul>
+    <li>Go to <a href="https://launch.smarthealthit.org" target="_blank">launch.smarthealthit.org</a>.</li>
+    <li>Ensure that “Provider EHR Launch” is selected as the “Launch Type”.</li>
+    <li>(Optional) Select any patient(s).</li>
+    <li>(Optional) Select any provider.</li>
+    <li>The App Launch URL is @Url.Page("Launch", null, null, "https").</li>
+</ul>
+
