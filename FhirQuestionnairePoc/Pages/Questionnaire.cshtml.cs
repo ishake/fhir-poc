@@ -39,7 +39,9 @@ namespace FhirQuestionnairePoc.Pages
         public void OnGet()
         {
             string iss = cache.Get<string>($"state:{this.State}");
-            FhirClient client = new(iss, DefaultFhirClientSettings.Settings);
+            var client = new FhirClient(iss, DefaultFhirClientSettings.Settings);
+            client.RequestHeaders.Add("Authorization", $"Bearer {AccessToken}");
+
 
             Patient ehrPatient = client.Read<Patient>($"Patient/{this.Patient}");
 
