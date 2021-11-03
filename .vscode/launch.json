@@ -1,0 +1,25 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Launch App",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "Build App",
+            "program": "${workspaceFolder}/FhirQuestionnairePoc/bin/Debug/net5.0/FhirQuestionnairePoc.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}/FhirQuestionnairePoc",
+            "stopAtEntry": false,
+            "serverReadyAction": {
+            "action": "openExternally",
+            "pattern": "^\\s*Now listening on:\\s+(https?://\\S+)"
+            },
+            "env": {
+            "ASPNETCORE_ENVIRONMENT": "Development"
+            },
+            "sourceFileMap": {
+            "/Views": "${workspaceFolder}/FhirQuestionnairePoc/Views"
+            }
+        },
+    ]
+}
