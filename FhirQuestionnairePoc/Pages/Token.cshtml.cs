@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Caching.Memory;
+using FhirQuestionnairePoc.Settings;
 
 namespace FhirQuestionnairePoc.Pages
 {
@@ -39,7 +40,7 @@ namespace FhirQuestionnairePoc.Pages
 
             string iss = cache.Get<string>($"state:{this.State}");
 
-            FhirClient fhirClient = new(iss);
+            FhirClient fhirClient = new(iss, DefaultFhirClientSettings.Settings);
             CapabilityStatement capability = fhirClient.CapabilityStatement();
             Extension security = capability.Rest[0].Security.GetExtension("http://fhir-registry.smarthealthit.org/StructureDefinition/oauth-uris");
             var tokenEndpoint = security.GetExtensionValue<FhirUri>("token");

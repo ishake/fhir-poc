@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Caching.Memory;
+using FhirQuestionnairePoc.Settings;
 
 namespace FhirQuestionnairePoc.Pages
 {
@@ -38,11 +39,12 @@ namespace FhirQuestionnairePoc.Pages
         public void OnGet()
         {
             string iss = cache.Get<string>($"state:{this.State}");
-            FhirClient client = new(iss);
-            //Patient ehrPatient = client.Read<Patient>($"Patient/{this.Patient}");
+            FhirClient client = new(iss, DefaultFhirClientSettings.Settings);
 
-            this.GetBloodPressure(client);
-            this.GetConditions(client);
+            Patient ehrPatient = client.Read<Patient>($"Patient/{this.Patient}");
+
+            // this.GetBloodPressure(client);
+            // this.GetConditions(client);
         }
 
         private void GetBloodPressure(FhirClient client)

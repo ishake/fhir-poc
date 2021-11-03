@@ -5,6 +5,7 @@ using Hl7.Fhir.Model;
 using Hl7.Fhir.Rest;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Caching.Memory;
+using FhirQuestionnairePoc.Settings;
 
 namespace FhirQuestionnairePoc.Pages
 {
@@ -21,11 +22,11 @@ namespace FhirQuestionnairePoc.Pages
 
         public void OnGet()
         {
-            string baseFhirUrl = "https://launch.smarthealthit.org/v/r4/sim/eyJoIjoiMSIsImIiOiI4N2EzMzlkMC04Y2FlLTQxOGUtODljNy04NjUxZTZhYWIzYzYsNjdjYmYwOTAtNGRkYi00Nzk5LTk5ZmYtYTI4YWJlMjc0MGIxLGMyMGNjZjVkLTE5YWMtNGRmZS1iZGMzLTNkMWQ2MzQ0ZmFjYyxkNjRiMzdmNS1kM2I1LTRjMjUtYWJlOC0yM2ViZThmNWEwNGUifQ/fhir";
+            string baseFhirUrl = "https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/";
             string scope = "patient/Patient.read patient/Observation.read launch/patient online_access openid profile";
             string redirect_uri = "https://localhost:5001/token";
 
-            FhirClient client = new(baseFhirUrl);
+            FhirClient client = new(baseFhirUrl, DefaultFhirClientSettings.Settings);
             CapabilityStatement capability = client.CapabilityStatement();
             Extension security = capability.Rest[0].Security.GetExtension("http://fhir-registry.smarthealthit.org/StructureDefinition/oauth-uris");
             var authorizeEndpoint = security.GetExtensionValue<FhirUri>("authorize");
