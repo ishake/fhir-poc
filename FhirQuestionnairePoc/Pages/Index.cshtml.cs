@@ -40,10 +40,10 @@ namespace FhirQuestionnairePoc.Pages
             StringBuilder launchUrl = new(authorizeEndpoint.Value);
             launchUrl.Append("?client_id=e186ac67-81c3-489c-90c1-fb33df5b6f22");
             launchUrl.Append("&response_type=code");
-            // launchUrl.Append($"&scope={HttpUtility.UrlEncode(scope)}");
+            launchUrl.Append($"&scope={HttpUtility.UrlEncode(scope)}");
             launchUrl.Append($"&redirect_uri={HttpUtility.UrlEncode(redirect_uri)}");
             launchUrl.Append($"&state={state}");
-            // launchUrl.Append($"&aud={HttpUtility.UrlEncode(baseFhirUrl)}");
+            launchUrl.Append($"&aud={HttpUtility.UrlEncode(baseFhirUrl)}");
 
             this.LaunchUrl = launchUrl.ToString();
         }

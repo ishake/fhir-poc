@@ -1,6 +1,6 @@
 ﻿@page
 @model QuestionnaireModel
-@using Hl7.Fhir.Model 
+@using Hl7.Fhir.Model
 
 <h1>Questionnaire</h1>
 
@@ -13,7 +13,7 @@
         <thead>
             <tr>
                 <th>Condition</th>
-                <th>Onset</th>
+                <th>Recorded Date</th>
                 <th>Status</th>
             </tr>
         </thead>
@@ -22,8 +22,8 @@
             {
                 <tr>
                     <td>@condition.Code.Text</td>
-                    <td>@((condition.Onset as FhirDateTime).ToDateTime().Value.Date.ToShortDateString())</td>
-                    <td>@condition.ClinicalStatus.Coding[0].Code</td>
+                    <td>@condition.RecordedDate</td>
+                    <td>@condition.ClinicalStatus?.Coding?.FirstOrDefault()?.Code</td>
                 </tr>
             }
         </tbody>

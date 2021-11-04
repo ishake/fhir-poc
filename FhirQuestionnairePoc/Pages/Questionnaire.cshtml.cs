@@ -50,7 +50,7 @@ namespace FhirQuestionnairePoc.Pages
 
             Patient ehrPatient = client.Read<Patient>($"Patient/{this.Patient}");
             this.GetBloodPressure(client);
-            // this.GetConditions(client);
+            this.GetConditions(client);
         }
 
         private void GetBloodPressure(FhirClient client)
@@ -64,11 +64,11 @@ namespace FhirQuestionnairePoc.Pages
 
             if (searchResults.Entry.Any())
             {
-                var bloodPressure = searchResults.Entry[0].Resource as Observation;
-                var systolic = bloodPressure.Component.First(_ => _.Code.Coding.Any(_ => _.Code == "8480-6")).Value as Quantity;
-                var diastolic = bloodPressure.Component.First(_ => _.Code.Coding.Any(_ => _.Code == "8462-4")).Value as Quantity;
-                this.SystolicBloodPressure = systolic.Value;
-                this.DiastolicBloodPressure = diastolic.Value;
+                var bloodPressure = (searchResults.Entry.Count > 0 ? searchResults.Entry[0].Resource : null) as Observation;
+                var systolic = bloodPressure?.Component?.FirstOrDefault(_ => _.Code.Coding.Any(_ => _.Code == "8480-6"))?.Value as Quantity;
+                var diastolic = bloodPressure?.Component?.FirstOrDefault(_ => _.Code.Coding.Any(_ => _.Code == "8462-4"))?.Value as Quantity;
+                this.SystolicBloodPressure = systolic?.Value;
+                this.DiastolicBloodPressure = diastolic?.Value;
             }
         }
 
@@ -78,7 +78,7 @@ namespace FhirQuestionnairePoc.Pages
             query = query.Where($"patient=Patient/{this.Patient}");
 
             Bundle searchResults = client.Search<Condition>(query);
-            this.Conditions = searchResults.Entry.Select(_ => _.Resource).Cast<Condition>().ToArray();
+            this.Conditions = searchResults.Entry.Select(_ => _.Resource).Where(_ => _.TypeName == "Condition").Cast<Condition>().ToArray();
         }
     }
 }
