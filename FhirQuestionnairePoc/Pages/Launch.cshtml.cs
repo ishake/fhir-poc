@@ -27,7 +27,7 @@ namespace FhirQuestionnairePoc.Pages
             string scope = "patient/Patient.read patient/Observation.read launch online_access openid profile";
             string redirect_uri = "https://localhost:5001/token";
 
-            FhirClient client = new(iss, DefaultFhirClientSettings.Settings);
+            FhirClient client = new(iss, DefaultSettings.FhirClientSettings);
             CapabilityStatement capability = client.CapabilityStatement();
             Extension security = capability.Rest[0].Security.GetExtension("http://fhir-registry.smarthealthit.org/StructureDefinition/oauth-uris");
             var authorizeEndpoint = security.GetExtensionValue<FhirUri>("authorize");

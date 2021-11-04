@@ -1,16 +1,12 @@
-using System;
-using System.Text;
-using System.Web;
-using Hl7.Fhir.Model;
 using Hl7.Fhir.Rest;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.Extensions.Caching.Memory;
 
 namespace FhirQuestionnairePoc.Settings
 {
-    public static class DefaultFhirClientSettings
+    public static class DefaultSettings
     {
-        public static readonly FhirClientSettings Settings = new FhirClientSettings
+        public static readonly string PatientName = "Lopez, Camila";
+        public static readonly string PatientId = "erXuFYUfucBZaryVksYEcMg3";
+        public static readonly FhirClientSettings FhirClientSettings = new FhirClientSettings
         {
             PreferredFormat = ResourceFormat.Json,
             VerifyFhirVersion = true,

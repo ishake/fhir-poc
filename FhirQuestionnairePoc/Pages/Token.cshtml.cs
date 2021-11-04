@@ -48,7 +48,7 @@ namespace FhirQuestionnairePoc.Pages
 
             string iss = cache.Get<string>($"state:{this.State}");
 
-            FhirClient fhirClient = new(iss, DefaultFhirClientSettings.Settings);
+            FhirClient fhirClient = new(iss, DefaultSettings.FhirClientSettings);
             CapabilityStatement capability = fhirClient.CapabilityStatement();
             Extension security = capability.Rest[0].Security.GetExtension("http://fhir-registry.smarthealthit.org/StructureDefinition/oauth-uris");
             var tokenEndpoint = security.GetExtensionValue<FhirUri>("token");

@@ -40,22 +40,17 @@ namespace FhirQuestionnairePoc.Pages
         {
             if (this.State == null || this.AccessToken == null) throw new Exception("State or AccessToken is null.");
             string iss = cache.Get<string>($"state:{this.State}");
-            var client = new FhirClient(iss, DefaultFhirClientSettings.Settings);
+            var client = new FhirClient(iss, DefaultSettings.FhirClientSettings);
             client.RequestHeaders.Add("Authorization", $"Bearer {AccessToken}");
 
-            if (!string.IsNullOrEmpty(Patient))
+            if (string.IsNullOrEmpty(Patient))
             {
-                Patient ehrPatient = client.Read<Patient>($"Patient/{this.Patient}");
-                this.GetBloodPressure(client);
-                // this.GetConditions(client);
+                Patient = DefaultSettings.PatientId;
             }
-            else
-            {
-                Patient = "erXuFYUfucBZaryVksYEcMg3";
-                Patient ehrPatient = client.Read<Patient>($"Patient/{this.Patient}");
-                this.GetBloodPressure(client);
-                // this.GetConditions(client);
-            }
+
+            Patient ehrPatient = client.Read<Patient>($"Patient/{this.Patient}");
+            this.GetBloodPressure(client);
+            // this.GetConditions(client);
         }
 
         private void GetBloodPressure(FhirClient client)

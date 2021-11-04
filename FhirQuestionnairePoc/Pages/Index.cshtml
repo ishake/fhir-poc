@@ -4,15 +4,21 @@
     ViewData["Title"] = "Home page";
 }
 
-<h1>SMART on FHIR Launch</h1>
-<p><a href="@Model.LaunchUrl" style="border: 1px solid black; padding: 0.5rem 1rem">Launch EHR From Portal</a></p>
-<hr />
+<h1>EHR Launch (SMART on FHIR)</h1>
 <p>To simulate a launch from within the EHR:</p>
 <ul>
     <li>Go to <a href="https://fhir.epic.com/Documentation?docId=launching"
             target="_blank">fhir.epic.com/Documentation?docId=launching</a>.</li>
     <li>Click "Try It" Button</li>
+    <li>Pick a the patient you'd like to use from the dropdown.</li>
     <li>In "Choose an app to test with", choose "POC".</li>
     <li>The App Launch URL is @Url.Page("Launch", null, null, "https").</li>
     <li>Hit "Launch"</li>
 </ul>
+
+<hr />
+
+<h1>Standalone Launch</h1>
+<p>Note: The patient's FHIR ID is not returned for provider-facing standalone launch workflows. For simplicity, one is
+    hard-coded to @Model.PatientName ("@Model.PatientId") in this POC.</p>
+<p><a href="@Model.LaunchUrl" style="border: 1px solid black; padding: 0.5rem 1rem">Launch EHR From Portal</a></p>
