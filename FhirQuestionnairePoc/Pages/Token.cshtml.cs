@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Caching.Memory;
 using FhirQuestionnairePoc.Settings;
+using System;
 
 namespace FhirQuestionnairePoc.Pages
 {
@@ -30,6 +31,13 @@ namespace FhirQuestionnairePoc.Pages
 
         public async Task<IActionResult> OnGet()
         {
+            if (Request.Query.ContainsKey("error"))
+            {
+                Console.WriteLine("Error from authorization server:");
+                Console.WriteLine(Request.QueryString);
+                return new OkResult();
+            }
+
             FormUrlEncodedContent content = new(new[]
             {
                 new KeyValuePair<string, string>("code", this.Code),
@@ -50,7 +58,12 @@ namespace FhirQuestionnairePoc.Pages
             string payload = await response.Content.ReadAsStringAsync();
             AccessTokenContext accessTokenContext = JsonSerializer.Deserialize<AccessTokenContext>(payload);
 
-            return RedirectToPage("Questionnaire", new { AccessToken = accessTokenContext.access_token, Patient = accessTokenContext.patient, State = this.State });
+            return RedirectToPage("Questionnaire", new
+            {
+                AccessToken = accessTokenContext.access_token,
+                Patient = accessTokenContext.patient,
+                State = this.State
+            });
         }
     }
 }

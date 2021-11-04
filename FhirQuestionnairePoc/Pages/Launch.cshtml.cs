@@ -24,7 +24,7 @@ namespace FhirQuestionnairePoc.Pages
         {
             string launch = this.Request.Query["launch"].FirstOrDefault();
             string iss = this.Request.Query["iss"].FirstOrDefault();
-            string scope = "patient/Patient.read patient/Observation.read launch/patient online_access openid profile";
+            string scope = "patient/Patient.read patient/Observation.read launch online_access openid profile";
             string redirect_uri = "https://localhost:5001/token";
 
             FhirClient client = new(iss, DefaultFhirClientSettings.Settings);

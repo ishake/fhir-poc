@@ -23,7 +23,7 @@ namespace FhirQuestionnairePoc.Pages
         public void OnGet()
         {
             string baseFhirUrl = "https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/";
-            string scope = "patient/Patient.read patient/Observation.read launch/patient online_access openid profile";
+            string scope = "patient/*.read launch online_access openid profile";
             string redirect_uri = "https://localhost:5001/token";
 
             FhirClient client = new(baseFhirUrl, DefaultFhirClientSettings.Settings);
@@ -34,15 +34,15 @@ namespace FhirQuestionnairePoc.Pages
             Guid state = Guid.NewGuid();
             cache.Set($"state:{state}", baseFhirUrl);
 
-            StringBuilder redirectUri = new(authorizeEndpoint.Value);
-            redirectUri.Append("?client_id=e186ac67-81c3-489c-90c1-fb33df5b6f22");
-            redirectUri.Append("&response_type=code");
-            redirectUri.Append($"&scope={HttpUtility.UrlEncode(scope)}");
-            redirectUri.Append($"&redirect_uri={HttpUtility.UrlEncode(redirect_uri)}");
-            redirectUri.Append($"&state={state}");
-            redirectUri.Append($"&aud={HttpUtility.UrlEncode(baseFhirUrl)}");
+            StringBuilder launchUrl = new(authorizeEndpoint.Value);
+            launchUrl.Append("?client_id=e186ac67-81c3-489c-90c1-fb33df5b6f22");
+            launchUrl.Append("&response_type=code");
+            launchUrl.Append($"&scope={HttpUtility.UrlEncode(scope)}");
+            launchUrl.Append($"&redirect_uri={HttpUtility.UrlEncode(redirect_uri)}");
+            launchUrl.Append($"&state={state}");
+            launchUrl.Append($"&aud={HttpUtility.UrlEncode(baseFhirUrl)}");
 
-            this.LaunchUrl = redirectUri.ToString();
+            this.LaunchUrl = launchUrl.ToString();
         }
     }
 }
